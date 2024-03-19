@@ -1,0 +1,285 @@
+html {
+	height: 100%;
+	width: 100%;
+}
+
+body {
+	margin: 0;
+	font-family: "DM Sans", sans-serif;
+	user-select: none;
+	color: #658ec3;
+}
+
+input, textarea, button {
+	outline: none;
+}
+
+.nav {
+	display: block;
+	box-shadow: 0 0 7px grey;
+	padding: 10px;
+	user-select: none;
+}
+
+.nav a {
+	float: right;
+	cursor: pointer;
+	margin: 0 3px;
+}
+
+.nav [hovarable] {
+	transform: translateY(-4px);
+	padding: 3px 5px;
+	border-radius: 5px;
+	transition: .2s;
+	border: 1px solid white;
+}
+.nav [hovarable]:hover {
+	background-color: #fafcff;
+	border: 1px solid #658ec3;
+}
+
+.nav a span {
+	font-size: 18px;
+	transform: scale(1.3) translateY(1px);
+	margin-left: 5px;
+}
+
+.svgdiv {
+	width: calc(100vw - 24px);
+	border: 1px solid lightgray;
+	margin: 10px;
+	box-shadow: 0 0 10px grey;
+	border-radius: 5px;
+	position: relative;
+	height: calc(100% - 24px);
+	/* chatgpt add for fix layer bug */
+}
+
+.svgdiv svg {
+	position: absolute;
+}
+
+.mains {
+	display: flex;
+	flex-direction: row;
+	height: calc(100vh - 44px);
+	overflow: hidden;
+	width: 100%;
+}
+
+.tools {
+	margin: 10px;
+	margin-right: 0px;
+	padding: 5px;
+	box-shadow: 0 0 10px grey;
+	border-radius: 7px;
+}
+
+.tools button {
+	background: #f0f0f0;
+	color: #658ec3;
+	border: none;
+	border-radius: 5px;
+	padding: 5px;
+	margin-bottom: 5px;
+	display: block;
+	animation: popclean .2s;
+	cursor: pointer;
+}
+
+.tools button[using] {
+	background: #658ec3;
+	color: white;
+}
+
+.tools button span {
+	transition: .2s;
+}
+
+.tools button:hover span {
+	transform: scale(1.2);
+}
+
+.newele {
+	bottom: 15px;
+	position: absolute;
+}
+
+.neweles {
+	padding: 4px 4px;
+	visibility: hidden;
+	background: #79a3d9;
+	border-radius: 5px;
+	position: absolute;
+	animation: pop .2s;
+	bottom: 63px;
+}
+
+.neweles button {
+	background: none;
+	padding: 1px;
+	color: white;
+}
+
+@keyframes pop {
+	0% {
+		opacity: 0;
+		transform: translateY(30px) scale(0.9);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateY(0px) scale(1);
+	}
+}
+
+@keyframes popclean {
+	0% {
+		opacity: 0;
+		transform: scale(0.9);
+	}
+
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes endopac {
+	0% {
+		opacity: 1;
+		transform: scale(1);
+	}
+
+	100% {
+		opacity: 0;
+		transform: scale(0.9);
+	}
+}
+
+.tooltip .tooltiptext {
+	visibility: hidden;
+	width: 80px;
+	background-color: #79a3d9;
+	color: #fff;
+	text-align: center;
+	display: block;
+	border-radius: 6px;
+	padding: 5px 0;
+	position: absolute;
+	z-index: 1;
+	transition: .2s;
+	opacity: 0;
+	left: 170%;
+}
+
+.tooltip .tooltiptext::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	right: 100%;
+	margin-top: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: transparent #79a3d9 transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+	visibility: visible;
+	opacity: 1;
+}
+
+.objtls {
+	position: absolute;
+	right: 15px;
+	background: #ebebebdb;
+	color: black;
+	padding: 10px;
+	top: 57px;
+	border-radius: 4px;
+	height: calc(100% - 98px);
+	z-index: 2;
+	box-shadow: 0 0 10px grey;
+	backdrop-filter: blur(10px);
+	width: 20vw;
+	min-width:150px;
+	overflow-y: scroll;
+	display: none;
+}
+
+.objtls input, .objtls textarea {
+	width: calc(100% - 13px);
+	border-radius: 5px;
+	border: 1px solid #6c7d93;
+	margin-bottom: 5px;
+	padding: 5px;
+	outline: none;
+}
+
+@media only screen and (max-width: 500px) {
+	.mains {
+		flex-direction: column-reverse;
+	}
+
+	.tools {
+		width: calc(100% - 31px);
+	}
+
+	.tools button {
+		display: inline-table;
+	}
+
+	.neweles {
+		padding: 2px 5px;
+		animation: pop .2s;
+		bottom: 19px;
+		position: fixed;
+		right: 61px;
+	}
+
+	.newele {
+		position: absolute;
+		right: 20px;
+	}
+
+	.objtls {
+		height: calc(20vh);
+		width: calc(100% - 53px);
+		margin-right: 3px;
+	}
+}
+
+#code-editor {
+	width: 85%;
+	height: 85%;
+	padding: 1rem;
+	border: 0;
+	outline: none;
+	border-radius: 5px;
+	box-shadow: 0 0 10px grey;
+}
+
+#code-editor nav b {
+	transform: translateY(-5px);
+	display: inline-block;
+	color: #648ec4;
+}
+
+#code-editor nav button {
+	border-radius: 50%;
+	border: none;
+	padding: 3px 5px;
+	color: #6991c5;
+	margin-bottom: 5px;
+	background: none;
+}
+
+#code-editor nav button:hover {
+	background-color: #f5f5f5;
+}
+
+#code-editor #code {
+	height: calc(100% - 40px);
+	border-radius: 3px;
+}

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>SVG Editor</title>
+	
+	<script src="script.js" defer type="module"></script>
+  <script src="touch_screen.js" defer type="module"></script>
+  <script src="SVGCodeEditor.js" defer type="module"></script>
+  <script src="point.js" defer type="module"></script>
+	<!--Fonts-->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+	
+	<!--Icons-->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" />
+	<link href="style.css" rel="stylesheet" type="text/css">
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ace-builds@1.31.1/css/ace.min.css">
+	</script>
+</head>
+
+<body>
+<div class="nav">
+	<b>SVG Editor</b>
+	
+	<a><span class="material-symbols-rounded">
+	settings
+	</span></a>
+	<a id="ex" title="Download/export svg"><span class="material-symbols-rounded">
+	download
+	</span></a>
+	<a id="im" title="Load File"><span class="material-symbols-rounded">
+	upload
+	</span></a>
+	<a hovarable id="ce" onclick="codeedit()">Code Editor</a>
+</div>
+	<div class="mains">
+		<div class="tools">
+      <button title="Offset" using>
+        <span class="material-symbols-rounded">
+        open_with
+        </span>
+      </button>
+			<button title="Cursor">
+				<span class="material-symbols-rounded">
+				arrow_selector_tool
+				</span>
+			</button>
+			<button title="delete">
+				<span class="material-symbols-rounded">
+				delete
+				</span>
+			</button>
+			<button title="Copy">
+				<span class="material-symbols-rounded">
+				content_copy
+				</span>
+			</button>
+			<button title="undo">
+				<span class="material-symbols-rounded">
+				undo
+				</span>
+			</button>
+			<button title="redo">
+				<span class="material-symbols-rounded">
+				redo
+				</span>
+			</button>
+      <button title="Linear Gradient">
+        <span class="material-symbols-outlined">
+        gradient 
+        </span>
+      </button>
+      <button title="Radial Gradient">
+        <span class="material-symbols-outlined">
+        vignette
+        </span>
+      </button>
+			<div class="neweles" id="dropdown">
+				<button class="tooltip" id="rect">
+					<span class="tooltiptext">Square</span>
+					<span class="material-symbols-rounded">
+					square
+					</span>
+				</button>
+				
+				<button class="tooltip" id="circle">
+					<span class="tooltiptext">Circle</span>
+					<span class="material-symbols-rounded">
+					circle
+
+					</span>
+					
+				</button>
+				<button class="tooltip" id="line">
+					<span class="tooltiptext">Line</span>
+					<span class="material-symbols-rounded">
+					horizontal_rule
+          </span>
+          </button>
+        <button class="tooltip" id="insertTTxt">TxT</button>
+        <button class="tooltip" id="insertTImg">Img</button>
+      </div>
+			<button title="new" class="newele" id="addButton">
+				<span class="material-symbols-rounded" id="addbtnte">
+				add
+				</span>
+			</button>
+      <button>Rular Menu</button>
+			<script>
+				var dropdown = document.getElementById('dropdown');
+				var addButton = document.getElementById('addButton');
+				var btnte = document.getElementById('addbtnte');
+				var isOpen = false;
+
+				addButton.addEventListener('click', function() {
+					if (isOpen) {
+						dropdown.style.visibility = 'hidden';
+						dropdown.style.display = 'none';
+						btnte.style.transform = 'rotate(0deg)'
+					} else {
+						dropdown.style.visibility = 'visible';
+						dropdown.style.display = 'block';
+						btnte.style.transform = 'rotate(45deg)'
+					}
+					isOpen = !isOpen;
+				});
+			</script>
+		</div>
+		<div class="objtls" id="objtls">
+      <label id="layername">Layer: </label>
+      <input id="layerto" type="number" placeholder="Layer Number to send there">
+      <div id="ForPathPoint">
+        <button id="pathadd">Add Point</button>
+        <button id="pathdel">Delete Point</button>
+        <button id="pathsel">Select Point</button>
+        <button id="pathdup">Duplicate Point</button>
+      </div>
+      <label id="obtype">Type: </label></br>
+			<label id="name">Name: </label>
+      <input type="text" id="thename"></br>
+      <label id="pos">Position: </label>
+      <input type="number" id="posx" placeholder="x">
+      <input type="number" id="posy" placeholder="y"></br>
+      <label id="size">Size: </label>
+      <input type="number" id="sizee" placeholder="change size">
+      <label id="rotate">Rotate: </label>
+      <input type="number" id="rotatee" placeholder="rotate">
+      <label id="fillcolor">Fill Color: </label>
+      <input type="color" id="thefc"></br>
+      <label id="boardercolor">Boarder Color: </label>
+      <input type="color" id="thebc"></br>
+      <label id="strokewidth">Boarder width</label>
+      <input type="number" id="thesw"></br>
+      <label id="opacity">Opacity: </label>
+      <input id="theop" type="number" max="100" min="0">
+		<label id="csslabel">Custom styling: </label>
+      <textarea id="css" placeholder="apply css here..." style="height: 250px;"></textarea>
+		</div>
+    <div class="svgdiv" id="svgdiv">
+      <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+        <circle cx="100px" cy="100px" r="50px" fill="#f20a0a" opacity="0.5" />
+        <circle cx="120px" cy="120px" r="50px" fill="#3cf20a" opacity="0.5" />
+        <path id="testtt" d="M20,100 Q60,70 100,100 Q140,130 180,100 L180,150 Q140,180 100,150 Q60,120 20,150 Z" fill="#b85504" stroke="#803f0a" stroke-width="2" />
+        <ellipse cx="100" cy="50" rx="80" ry="30" fill="blue" />
+        <path d="M100,200 C100,100 200,100 200,200 C200,300 100,300 100,200 Z" fill="#0000000" stroke="black" stroke-width="2" />
+      </svg>
+    </div>
+	</div>
+	<div id="gradientmenu">
+		
+	</div>
+
+	<dialog id="code-editor">
+		<!--ace-->
+		  <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.31.1/src-min-noconflict/ace.min.js"></script>
+		<nav>
+			<button onclick="document.getElementById('code-editor').close()" id="codebackbyn">
+				<span class="material-symbols-rounded">
+					arrow_back
+				</span>
+			</button>
+			<b>Code Editor</b>
+		</nav>
+		<div id="code">
+			
+		</div>
+
+		<script>
+      let pointmoving = false; // for make global :)
+			var editor = ace.edit("code");
+			editor.setTheme("ace/theme/monokai");
+			editor.session.setMode("ace/mode/html");
+			editor.setValue("its working");
+			// display data in ace editor
+			function codeedit() {
+				document.getElementById('code-editor').showModal()
+				editor.setValue(document.getElementById("svgdiv").querySelector("svg").innerHTML)
+			}
+		</script>
+	</dialog>
+</body>
+
+</html>
